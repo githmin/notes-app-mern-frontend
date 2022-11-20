@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Mcontainer = styled.div`
@@ -68,6 +69,30 @@ const Submit = styled.button`
     background: black;
   }
 `;
+
+const RegisterDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+`;
+const Reg = styled.button`
+  width: 180px;
+  height: 50px;
+  font-size: 16px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid black;
+  outline: none;
+  transition: 0.5s ease-in-out;
+
+  :hover {
+    color: white;
+    border: 1px solid black;
+    transition: 0.5s ease-in-out;
+    background: black;
+  }
+`;
 const Signin = () => {
   return (
     <Mcontainer>
@@ -78,6 +103,11 @@ const Signin = () => {
           <Password placeholder="Your super secret password" />
           <Submit>Login</Submit>
         </Form>
+        <RegisterDiv>
+          <Link to="/signup">
+            <Reg>Not Signed up? Register here</Reg>
+          </Link>
+        </RegisterDiv>
       </Paper>
     </Mcontainer>
   );

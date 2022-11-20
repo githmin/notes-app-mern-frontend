@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Mcontainer = styled.div`
   @import url("https://fonts.googleapis.com/css2?family=Mukta&display=swap");
@@ -68,6 +69,30 @@ const Submit = styled.button`
     background: black;
   }
 `;
+
+const SigninDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+`;
+const Signin = styled.button`
+  width: 180px;
+  height: 50px;
+  font-size: 16px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid black;
+  outline: none;
+  transition: 0.5s ease-in-out;
+
+  :hover {
+    color: white;
+    border: 1px solid black;
+    transition: 0.5s ease-in-out;
+    background: black;
+  }
+`;
 const Register = () => {
   return (
     <Mcontainer>
@@ -78,6 +103,11 @@ const Register = () => {
           <Password placeholder="Your super secret password" />
           <Submit>Register!</Submit>
         </Form>
+        <SigninDiv>
+          <Link to="/">
+            <Signin>Alread a user? Sign in here</Signin>
+          </Link>
+        </SigninDiv>
       </Paper>
     </Mcontainer>
   );
