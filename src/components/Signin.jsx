@@ -99,27 +99,17 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const [incorrect, setIncorrect] = useState("");
 
-  const handleChangeUsername = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handleChangePword = (event) => {
-    setPassword(event.target.value);
-  };
-
   const navigate = useNavigate();
 
   const handelLogin = async (e) => {
     e.preventDefault();
     const data = { username: username, password: password };
     await axios
-      .post("http://localhost:5000/api/login", data)
+      .post("/api/login", data)
       .then((res) => {
-        if (res.data.status === "Incorrect") {
-          setIncorrect("Incorrect username or password :( ");
-        } else if (res.data.redirectTo) {
-          navigate(`${res.data.redirectTo}`);
-        }
+        let token = res.data.token;
+        localStorage.setItem("token", token);
+        navigate("/dashboard");
       })
       .catch((e) => console.log(e));
   };
@@ -133,13 +123,17 @@ const Signin = () => {
             placeholder="Username"
             name="username"
             id="username"
-            onChange={handleChangeUsername}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
           />
           <Password
             placeholder="Your super secret password"
             name="password"
             id="password"
-            onChange={handleChangePword}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
             type="password"
           />
           <div>{incorrect}</div>
