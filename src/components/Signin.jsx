@@ -1,6 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios, * as others from "axios";
 
 const Mcontainer = styled.div`
   @import url("https://fonts.googleapis.com/css2?family=Mukta&display=swap");
@@ -94,14 +95,55 @@ const Reg = styled.button`
   }
 `;
 const Signin = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [incorrect, setIncorrect] = useState("");
+
+  const handleChangeUsername = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handleChangePword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const navigate = useNavigate();
+
+  const handelLogin = async (e) => {
+    e.preventDefault();
+    const data = { username: username, password: password };
+    await axios
+      .post("http://localhost:5000/api/login", data)
+      .then((res) => {
+        if (res.data.status === "Incorrect") {
+          setIncorrect("Incorrect username or password :( ");
+        } else if (res.data.redirectTo) {
+          navigate(`${res.data.redirectTo}`);
+        }
+      })
+      .catch((e) => console.log(e));
+  };
+
   return (
     <Mcontainer>
       <Header>Sign in</Header>
       <Paper>
         <Form>
-          <Username placeholder="Username" />
-          <Password placeholder="Your super secret password" />
-          <Submit>Login</Submit>
+          <Username
+            placeholder="Username"
+            name="username"
+            id="username"
+            onChange={handleChangeUsername}
+          />
+          <Password
+            placeholder="Your super secret password"
+            name="password"
+            id="password"
+            onChange={handleChangePword}
+            type="password"
+          />
+          <div>{incorrect}</div>
+          <Submit onClick={handelLogin}>Login</Submit>
         </Form>
         <RegisterDiv>
           <Link to="/signup">
