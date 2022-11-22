@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios, * as others from "axios";
@@ -95,11 +95,17 @@ const Reg = styled.button`
   }
 `;
 const Signin = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.getItem("token")
+      ? navigate("/dashboard")
+      : console.log("Not logged in");
+  }, []);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [incorrect, setIncorrect] = useState("");
-
-  const navigate = useNavigate();
 
   const handelLogin = async (e) => {
     e.preventDefault();
