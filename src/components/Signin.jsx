@@ -116,7 +116,7 @@ const Signin = () => {
       .post(`${process.env.REACT_APP_API }/api/login`, data)
       .then((res) => {
         let token = res.data.token;
-        localStorage.setItem("token", token);
+         localStorage.setItem("token", token);
         navigate("/dashboard");
       })
       .catch((e) => console.log(e));
