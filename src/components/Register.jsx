@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Mcontainer = styled.div`
   @import url("https://fonts.googleapis.com/css2?family=Mukta&display=swap");
@@ -94,14 +95,45 @@ const Signin = styled.button`
   }
 `;
 const Register = () => {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState([]);
+  const [password, setPassword] = useState([]);
+  const [status, setStatus] = useState([]);
+
+  const handelRegister = async (e) => {
+    e.preventDefault();
+    axios
+      .post("/api/register", { username, password })
+      .then((res) => {
+        setStatus("Sign up successfull ! Redirecting to login in 5 seconds!");
+        setTimeout(() => {
+          navigate("/");
+        }, 5000);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    console.log("hi");
+  };
+
   return (
     <Mcontainer>
       <Header>Sign Up</Header>
       <Paper>
         <Form>
-          <Username placeholder="Username" />
-          <Password placeholder="Your super secret password" />
-          <Submit>Register!</Submit>
+          <Username
+            placeholder="Username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Password
+            type="password"
+            placeholder="Your super secret password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <div>{status}</div>
+          <Submit onClick={handelRegister}>Register!</Submit>
         </Form>
         <SigninDiv>
           <Link to="/">
