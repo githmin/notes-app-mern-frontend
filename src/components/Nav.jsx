@@ -47,6 +47,9 @@ const Logout = styled.img`
 `;
 
 export const Nav = () => {
+
+  const navigate = useNavigate()
+
   useEffect(() => {
     populateData();
     console.log(username);
@@ -56,7 +59,7 @@ export const Nav = () => {
   const populateData = async () => {
     const token = await localStorage.getItem("token");
     axios
-      .get(`${process.env.REACT_APP_API }/api/nav`, {
+      .get(`${process.env.REACT_APP_API}/api/nav`, {
         headers: {
           authorization: token,
         },
@@ -65,10 +68,10 @@ export const Nav = () => {
       .catch((e) => console.log(e));
   };
 
-  const navigate = useNavigate();
   const handelLogOut = () => {
     localStorage.removeItem("token");
-    navigate("/");
+    navigate('/')
+    // window.location.reload(false);
   };
 
   return (

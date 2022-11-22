@@ -95,29 +95,22 @@ const Reg = styled.button`
   }
 `;
 const Signin = () => {
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    localStorage.getItem("token")
-      ? navigate("/dashboard")
-      : console.log("Not logged in");
-  }, []);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [incorrect, setIncorrect] = useState("");
 
   const handelLogin = async (e) => {
-
     e.preventDefault();
     const data = { username: username, password: password };
     await axios
-      .post(`${process.env.REACT_APP_API }/api/login`, data)
+      .post(`${process.env.REACT_APP_API}/api/login`, data)
       .then((res) => {
         let token = res.data.token;
-         localStorage.setItem("token", token);
-        navigate("/dashboard");
+        localStorage.setItem("token", token);
+        navigate('/dashboard')
+        // window.location.reload(false);
       })
       .catch((e) => console.log(e));
   };

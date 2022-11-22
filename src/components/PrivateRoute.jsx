@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 import React from "react";
+import Dashboard from "./Dashboard";
 
-const auth = localStorage.getItem("token");
 export const PrivateRoute = () => {
-  return auth ? <Outlet /> : <h1>Please Log in to continue...</h1>;
+  const auth = localStorage.getItem("token");
+  return <div>{auth ? <Outlet /> : <Navigate to="/" />}</div>;
 };
