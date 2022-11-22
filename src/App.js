@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Signin />} />
         <Route path="/signup" element={<Register />} />
-        {/* { auth ? <Route path="/dashboard" element={<Dashboard />} /> : navigate('/') } */} */}
+        {/* { auth ? <Route path="/dashboard" element={<Dashboard />} /> : navigate('/') } */} 
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
            {/* <Route path="/dashboard" element={<PrivateRoute />} /> */}
