@@ -102,7 +102,7 @@ const Register = () => {
 
   const handelRegister = async (e) => {
     e.preventDefault();
-    axios
+    await axios
       .post("/api/register", { username, password })
       .then((res) => {
         setStatus("Sign up successfull ! Redirecting to login in 5 seconds!");
