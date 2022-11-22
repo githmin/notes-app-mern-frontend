@@ -3,6 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { Nav } from "./Nav";
 import { useRef } from "react";
+import deleteIcon from "./assets/delete.png";
 
 const Mcontainer = styled.div`
   display: flex;
@@ -15,6 +16,11 @@ const NoteContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+`;
+const MainPapaer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Paper = styled.div`
@@ -49,6 +55,11 @@ const SubmitNewNote = styled.button`
   padding: 10px;
   border-radius: 10px;
   background-color: transparent;
+`;
+
+const DeleteImg = styled.img`
+  height: 30px;
+  cursor: pointer;
 `;
 
 const Dashboard = () => {
@@ -87,10 +98,31 @@ const Dashboard = () => {
         }
       )
       .then((res) => {
-        fetchNotes();
         setNoteData("");
+        fetchNotes();
       })
       .catch((e) => console.log(e));
+  };
+
+  const handelNoteDelete = async (id) => {
+    const token = await localStorage.getItem("token");
+    console.log(id);
+    await axios
+      .post(
+        "/api/note/delete",
+        { id },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      )
+      .then((res) => {
+        fetchNotes();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
@@ -106,7 +138,15 @@ const Dashboard = () => {
         </InputContainer>
         <NoteContainer>
           {notes.map((notes) => (
-            <Paper>{notes.note}</Paper>
+            <MainPapaer key={notes._id}>
+              <Paper>{notes.note}</Paper>{" "}
+              <DeleteImg
+                src={deleteIcon}
+                onClick={(e) => {
+                  handelNoteDelete(notes._id);
+                }}
+              />
+            </MainPapaer>
           ))}
         </NoteContainer>
       </Mcontainer>
