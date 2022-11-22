@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LogOutImg from "./assets/logout.png";
+import axios from "axios";
 
 const MainDiv = styled.div`
   background-color: white;
@@ -46,6 +47,24 @@ const Logout = styled.img`
 `;
 
 export const Nav = () => {
+  useEffect(() => {
+    populateData();
+    console.log(username);
+  }, []);
+
+  const [username, setUsername] = useState([]);
+  const populateData = async () => {
+    const token = await localStorage.getItem("token");
+    axios
+      .get("/api/nav", {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then((res) => setUsername(res.data))
+      .catch((e) => console.log(e));
+  };
+
   const navigate = useNavigate();
   const handelLogOut = () => {
     localStorage.removeItem("token");
@@ -62,7 +81,7 @@ export const Nav = () => {
         </Credits>
       </Left>
       <UserDiv>
-        <User>Hello Alex!</User>
+        <User>Hello {username}!</User>
         <Logout src={LogOutImg} onClick={handelLogOut} />
       </UserDiv>
     </MainDiv>
