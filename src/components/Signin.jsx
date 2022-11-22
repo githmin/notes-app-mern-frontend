@@ -95,6 +95,7 @@ const Reg = styled.button`
   }
 `;
 const Signin = () => {
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -108,10 +109,11 @@ const Signin = () => {
   const [incorrect, setIncorrect] = useState("");
 
   const handelLogin = async (e) => {
+
     e.preventDefault();
     const data = { username: username, password: password };
     await axios
-      .post("/api/login", data)
+      .post(`${process.env.REACT_APP_API }/api/login`, data)
       .then((res) => {
         let token = res.data.token;
         localStorage.setItem("token", token);

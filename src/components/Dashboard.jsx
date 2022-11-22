@@ -63,11 +63,13 @@ const DeleteImg = styled.img`
 `;
 
 const Dashboard = () => {
+
+
   const [notes, setNotes] = useState([]);
   const fetchNotes = async () => {
     const token = await localStorage.getItem("token");
     await axios
-      .get("/api/note", {
+      .get(`${process.env.REACT_APP_API }/api/note`, {
         headers: {
           authorization: token,
         },
@@ -89,7 +91,7 @@ const Dashboard = () => {
     const token = await localStorage.getItem("token");
     await axios
       .post(
-        "/api/note",
+        `${process.env.REACT_APP_API }/api/note`,
         { note: noteData },
         {
           headers: {
@@ -109,7 +111,7 @@ const Dashboard = () => {
     console.log(id);
     await axios
       .post(
-        "/api/note/delete",
+        `${process.env.REACT_APP_API }/api/note/delete`,
         { id },
         {
           headers: {

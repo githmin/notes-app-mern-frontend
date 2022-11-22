@@ -103,7 +103,7 @@ const Register = () => {
   const handelRegister = async (e) => {
     e.preventDefault();
     await axios
-      .post("/api/register", { username, password })
+      .post(`${process.env.REACT_APP_API }/api/register`, { username, password })
       .then((res) => {
         setStatus("Sign up successfull ! Redirecting to login in 5 seconds!");
         setTimeout(() => {

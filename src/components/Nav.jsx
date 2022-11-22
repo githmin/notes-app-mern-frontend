@@ -56,7 +56,7 @@ export const Nav = () => {
   const populateData = async () => {
     const token = await localStorage.getItem("token");
     axios
-      .get("/api/nav", {
+      .get(`${process.env.REACT_APP_API }/api/nav`, {
         headers: {
           authorization: token,
         },
